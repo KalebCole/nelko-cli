@@ -1,0 +1,16 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "nelko-cli"
+version = "0.1.0"
+description = "Offline P21 label rendering and preview"
+requires-python = ">=3.9"
+dependencies = ["Pillow>=11.0"]
+
+[project.scripts]
+nelko = "nelko.cli:main"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
