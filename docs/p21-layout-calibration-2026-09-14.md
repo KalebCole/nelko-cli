@@ -1,8 +1,10 @@
 # P21 layout calibration run — 2026-09-14
 
+> Historical prototype evidence. Disposable probe source and generated job files are preserved on the [`archive/p21-evidence-2026-09-14`](https://github.com/KalebCole/nelko-p21-cli/tree/archive/p21-evidence-2026-09-14) branch rather than on `main`.
+
 **Issue:** #3
-**Scope:** one P21 only: `FC:50:17:13:FF:8A`, native RFCOMM channel `1` on macOS.
-**Physical result:** pending Kaleb's direct inspection. A host write and protocol response are not physical-print evidence.
+**Scope:** one tested P21 only, using native RFCOMM channel `1` on macOS.
+**Result:** the rotation was later accepted as pixel-perfect during the fourteen-label run recorded on issue #4.
 
 ## Purpose
 
@@ -18,7 +20,7 @@ This run isolates **layout rotation** while holding all other known variables co
 
 The calibration drawing starts as a `284 × 96` landscape canvas and is rotated clockwise to the physical P21 `96 × 284` bitmap. It contains a filled square labeled `BLACK MARK = TOP LEFT`, a border, `P21 CALIBRATION`, and `ROTATED / ONE LABEL`. This makes orientation, clipping, and text readability observable on one inexpensive label.
 
-The generator is `prototype-build-calibration-label.py`. Its offline output contract was checked before transmission:
+The archived generator is `prototype-build-calibration-label.py`. Its offline output contract was checked before transmission:
 
 ```text
 bytes: 3515
@@ -53,8 +55,6 @@ The response matches the earlier accepted raster job exactly. Its semantic field
 5. Close the channel and wait for the device's ACL state to become disconnected before a subsequent RFCOMM attempt. A failed open sends no print bytes and may be retried only after that state transition.
 6. Never automatically resend a job after a complete job write or an ambiguous response; it could duplicate a physical label.
 
-## What remains to calibrate
+## Subsequent evidence
 
-Kaleb must inspect the single physical label before this becomes a supported layout. The required neutral observation is whether there was **clear text**, **clipping or inversion**, **the location of the black corner square**, and whether the label is readable in a natural orientation. `No label`, `unclear`, or `uncertain` leaves #3 open.
-
-Third-party reverse-engineered sources independently describe this payload shape and clockwise rotation, but are corroboration only. The printer and Kaleb's visual observation decide whether this macOS implementation is correct.
+The later fourteen-label run confirmed the clockwise layout and is recorded on [issue #4](https://github.com/KalebCole/nelko-p21-cli/issues/4#issuecomment-5672455769). Third-party reverse-engineered sources remain corroboration only. The current Wayfinder map separately tracks the software-observable runtime contract required for the production CLI.
