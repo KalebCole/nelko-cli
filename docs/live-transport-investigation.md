@@ -1,12 +1,14 @@
 # Live transport investigation: Nelko P21 on macOS
 
+> Historical prototype evidence. Disposable probe source and generated job files are preserved on the [`archive/p21-evidence-2026-09-14`](https://github.com/KalebCole/nelko-p21-cli/tree/archive/p21-evidence-2026-09-14) branch rather than on `main`.
+
 **Issue:** #2  
 **Date:** 2026-09-14  
-**State:** transport and protocol acknowledgement proven; physical output awaiting direct visual confirmation.
+**State:** transport and protocol acknowledgement were proven in this run; later batch evidence is recorded on issue #4.
 
 ## Scope and safety
 
-The experiments were constrained to the paired P21 at `FC:50:17:13:FF:8A`, RFCOMM channel 1, and the documented read-only `BATTERY?` query before one single-copy, visibly marked test job. No firmware, factory-reset, configuration, beep, or mobile-app command was used. `DENSITY 15` and `DIRECTION 1,1` appear only in the submitted print job and are not claimed to be persistent printer settings.
+The experiments were constrained to the tested paired P21, RFCOMM channel 1, and the documented read-only `BATTERY?` query before one single-copy, visibly marked test job. No firmware, factory-reset, configuration, beep, or mobile-app command was used. `DENSITY 15` and `DIRECTION 1,1` appear only in the submitted print job and are not claimed to be persistent printer settings.
 
 ## Layered evidence
 
@@ -27,7 +29,7 @@ The old direct serial approach mistook the existence of `/dev/cu.P21` for an ope
 
 ## Exact successful session contract so far
 
-1. Resolve only the paired device `FC:50:17:13:FF:8A` and only RFCOMM channel `1`.
+1. Resolve only the tested paired P21 and only RFCOMM channel `1`.
 2. Open it using `IOBluetoothDevice openRFCOMMChannelSync:withChannelID:delegate:`.
 3. Verify `kIOReturnSuccess`, a non-null open channel, and its MTU before sending bytes.
 4. Send commands with `IOBluetoothRFCOMMChannel writeSync:length:` in chunks no larger than the reported MTU (666 in this session).
@@ -53,6 +55,6 @@ PRINT 1 CRLF
 
 The rendered label says `P21 LIVE TEST`, `RFCOMM OK`, `2026-09-14`, and `ONE LABEL` inside a border. It was sent once only.
 
-## Next gate
+## Subsequent evidence
 
-Do not close #2 or infer printing from the printer response. Kaleb must directly confirm whether this single marked label appeared and whether its text is legible. If confirmed, record the exact confirmation, close #2, formalize #3, then proceed with the minimal CLI design and TDD implementation.
+This document records the transport boundary observed during the initial probe. The later fourteen-label run and its acceptance evidence are recorded on [issue #4](https://github.com/KalebCole/nelko-p21-cli/issues/4#issuecomment-5672455769). Product success semantics are intentionally not inferred from this historical probe; the current Wayfinder map tracks that decision separately.
